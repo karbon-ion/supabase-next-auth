@@ -5,15 +5,14 @@ import { redirect } from "next/navigation"
 
 import { createClient } from "@/utils/supabase/server"
 
-export async function login(formData: FormData){
+interface loginModel {
+  email: string,
+  password: string
+}
+
+export async function login(values: loginModel){
     const supabase = await createClient()
-
-    const data = {
-        email: formData.get('email') as string,
-        password: formData.get('password') as string
-    }
-
-    const {error} = await supabase.auth.signInWithPassword(data)
+    const {error} = await supabase.auth.signInWithPassword(values)
 
     if(error){
         redirect('/error')
@@ -22,23 +21,21 @@ export async function login(formData: FormData){
     redirect('/')
 }
 
-export async function signup(formData: FormData){
-    const supabase = await createClient()
+interface signUpModel {
+  name: string
+  email: string
+  password: string
+}
 
-     // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    name: formData.get('name') as string,
-    email: formData.get('email') as string,
-    password: formData.get('password') as string,
-  }
+export async function signup(values:signUpModel){
+  const supabase = await createClient()
 
-  const { error } = await supabase.auth.signUp(data)
+  const { error } = await supabase.auth.signUp(values)
 
   if (error) {
     redirect('/error')
   }
 
   revalidatePath('/', 'layout')
-  redirect('/')
+  redirect('/private')
 }
