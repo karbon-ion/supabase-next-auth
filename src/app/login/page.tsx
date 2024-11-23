@@ -59,6 +59,12 @@ export default function LoginPage() {
                   >
                     Create one
                   </Link>
+                  <Link
+                    className="text-blue-500 cursor-pointer hover:underline"
+                    href='/auth/reset-password-email'
+                  >
+                    Reset Password
+                  </Link>
                 </p>
               </div>
             </Form>
