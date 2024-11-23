@@ -7,10 +7,14 @@ import { signup } from '../login/actions';
 import { LabeledField } from '@/components/ui/form-utilities';
 import { Button } from '@/components/ui/button';
 import * as Yup from 'yup'
+import { useState } from 'react';
 
 
 
 export default function SignUpPage() {
+
+    const [error, setError] = useState<string>('')
+    const [btnLoading, setBtnLoading] = useState(false)
 
     const validationSchema = Yup.object({
         name: Yup.string().required(),
@@ -26,8 +30,11 @@ export default function SignUpPage() {
                 <Formik
                     initialValues={{ name: '', email: '', password: '', cPassword: '' }}
                     validationSchema={validationSchema}
-                    onSubmit={(values) => {
-                        signup(values)
+                    onSubmit={async (values) => {
+                        setBtnLoading(true)
+                        const {error} = await signup(values)
+                        setError(error.message)
+                        setBtnLoading(false)
                     }}
                 >
                     {({ handleSubmit }) => (
@@ -46,10 +53,11 @@ export default function SignUpPage() {
                             </div>
                             <div className="flex items-center justify-between">
                                 <Button
+                                isLoading={btnLoading}
                                     type="submit"
                                     className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
                                 >
-                                    Sign Up
+                                    {btnLoading ? "Loading...":"Sign Up"}
                                 </Button>
                                 <p className="text-sm text-gray-600">
                                     Already have an account?

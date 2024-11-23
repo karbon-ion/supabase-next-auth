@@ -6,17 +6,19 @@ import { Formik, Form } from 'formik'
 import { LabeledField } from '@/components/ui/form-utilities'
 import { Button } from '@/components/ui/button'
 import * as Yup from 'yup'
+import { useState } from 'react'
 
 
 
 export default function LoginPage() {
 
+  const [error, setError] = useState<string>('')
+  const [btnLoading, setBtnLoading] = useState(false)
+
   const validationSchema = Yup.object({
     email: Yup.string().email().required(),
     password: Yup.string().required()
   })
-
-  console.log(process.env, 'env')
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -25,8 +27,11 @@ export default function LoginPage() {
         <Formik
           initialValues={{ email: '', password: '' }}
           validationSchema={validationSchema}
-          onSubmit={(values) => {
-            login(values)
+          onSubmit={async (values) => {
+            setBtnLoading(true)
+            const {error} = await login(values)
+            setError(error.message)
+            setBtnLoading(false)
           }}
         >
           {({ handleSubmit }) => (
@@ -37,12 +42,14 @@ export default function LoginPage() {
               <div className="mb-4">
                 <LabeledField name='password' type='password' label='Password' />
               </div>
+              <div className="text-red-700">{error}</div>
               <div className="flex items-center justify-between">
                 <Button
+                  isLoading={btnLoading}
                   className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:border-blue-300"
                   type='submit'
                 >
-                  Login
+                  {btnLoading ? 'Laoding...':'Login'}
                 </Button>
                 <p className="text-sm text-gray-600">
                   Don't have an account?{' '}

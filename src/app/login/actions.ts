@@ -15,10 +15,10 @@ export async function login(values: loginModel){
     const {error} = await supabase.auth.signInWithPassword(values)
 
     if(error){
-        redirect('/error')
+      return {error}
     }
     revalidatePath('/', 'layout')
-    redirect('/')
+    redirect('/home')
 }
 
 interface signUpModel {
@@ -29,13 +29,22 @@ interface signUpModel {
 
 export async function signup(values:signUpModel){
   const supabase = await createClient()
-
   const { error } = await supabase.auth.signUp(values)
 
   if (error) {
-    redirect('/error')
+    return {error}
   }
 
   revalidatePath('/', 'layout')
-  redirect('/private')
+  redirect('/auth/varify-email')
+}
+
+export async function signOut(){
+  const supabase = await createClient()
+  const { error } = await supabase.auth.signOut()
+  if(error){
+    return {error}
+  }
+  revalidatePath('/', 'layout')
+  redirect('/login')
 }
