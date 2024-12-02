@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { signOut } from '@/app/login/actions'
+import { signOut } from '@/app/[locale]/login/actions'
 
 export default function AdminHeader() {
 
