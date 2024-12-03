@@ -2,12 +2,13 @@
 "use client"
 
 import { Form, Formik } from 'formik';
-import Link from 'next/link';
 import { signup } from '../login/actions';
 import { LabeledField } from '@/components/ui/form-utilities';
 import { Button } from '@/components/ui/button';
 import * as Yup from 'yup'
 import { useState } from 'react';
+import { useAppContext } from '@/components/context/appContext';
+import { Link } from '@/i18n/routing';
 
 
 
@@ -15,6 +16,7 @@ export default function SignUpPage() {
 
     const [error, setError] = useState<string>('')
     const [btnLoading, setBtnLoading] = useState(false)
+    const {t} = useAppContext()
 
     const validationSchema = Yup.object({
         name: Yup.string().required(),
@@ -60,11 +62,11 @@ export default function SignUpPage() {
                                     {btnLoading ? "Loading...":"Sign Up"}
                                 </Button>
                                 <p className="text-sm text-gray-600">
-                                    Already have an account?
+                                    {t.signup.already_have_account}
                                     <Link
                                         className="text-blue-500 cursor-pointer hover:underline" href='/login'
                                     >
-                                        Login
+                                        {t.signup.login}
                                     </Link>
                                 </p>
                             </div>

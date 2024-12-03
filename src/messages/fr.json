@@ -1,0 +1,13 @@
+{
+    "login": {
+        "dont_have_account": "Vous n'avez pas de compte ?",
+        "signup": "Créer un",
+        "reset_password": "Réinitialiser le mot de passe",
+        "email": "E-mail",
+        "Password": "Mot de passe"
+    },
+    "signup": {
+        "already_have_account": "Vous avez déjà un compte ?",
+        "login": "se connecter"
+    }
+}

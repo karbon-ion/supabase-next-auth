@@ -26,5 +26,5 @@ export default function Home() {
     getUser()
   },[])
 
-  return (<>{logedIn && redirect('/home')}</>);
+  return (<>{logedIn && redirect('/login')}</>);
 }

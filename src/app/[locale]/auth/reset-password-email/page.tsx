@@ -32,7 +32,7 @@ export default function ResetPasswordForm() {
             <Card className="w-full max-w-md mx-auto">
                 <CardHeader>
                     <CardTitle>Reset Password</CardTitle>
-                    <CardDescription>Enter your new password below.</CardDescription>
+                    <CardDescription>Enter your Email Below.</CardDescription>
                 </CardHeader>
                 <form onSubmit={submitEmail}>
                     <CardContent className='space-y-4'>
