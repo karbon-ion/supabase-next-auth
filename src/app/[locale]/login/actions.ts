@@ -4,13 +4,14 @@ import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 
 import { createClient } from "@/utils/supabase/server"
+import { locale } from "@/components/utilities/models/models"
 
 interface loginModel {
   email: string,
   password: string
 }
 
-export async function login(values: loginModel){
+export async function login(values: loginModel, local: locale){
     const supabase = await createClient()
     const {error} = await supabase.auth.signInWithPassword(values)
 
@@ -18,7 +19,7 @@ export async function login(values: loginModel){
       return {error}
     }
     revalidatePath('/', 'layout')
-    redirect('/home')
+    redirect(`/${local}/home`)
 }
 
 interface signUpModel {
@@ -39,12 +40,12 @@ export async function signup(values:signUpModel){
   redirect('/auth/varify-email')
 }
 
-export async function signOut(){
+export async function signOut(local: locale){
   const supabase = await createClient()
   const { error } = await supabase.auth.signOut()
   if(error){
     return {error}
   }
   revalidatePath('/', 'layout')
-  redirect('/login')
+  redirect(`/${local || 'en'}/login`)
 }
