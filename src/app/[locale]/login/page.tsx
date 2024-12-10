@@ -19,7 +19,7 @@ export default function LoginPage({params}:{ params: Promise<ParamsType>}) {
 
   const [error, setError] = useState<string>('')
   const [btnLoading, setBtnLoading] = useState(false)
-  const {t, setT} = useAppContext()
+  const {t, setT, setLang} = useAppContext()
 
   const validationSchema = Yup.object({
     email: Yup.string().email().required(),
@@ -28,8 +28,10 @@ export default function LoginPage({params}:{ params: Promise<ParamsType>}) {
 
   async function getParamsAndDictFun(){
     try{
-      const dict = await getDictionary((await params).locale)
+      const lang = (await params).locale
+      const dict = await getDictionary(lang)
       setT(dict)
+      setLang(lang)
     }catch(er){
       console.log(er)
     }
@@ -52,7 +54,7 @@ export default function LoginPage({params}:{ params: Promise<ParamsType>}) {
           validationSchema={validationSchema}
           onSubmit={async (values) => {
             setBtnLoading(true)
-            const {error} = await login(values)
+            const {error} = await login(values, (await params).locale)
             setError(error.message)
             setBtnLoading(false)
           }}

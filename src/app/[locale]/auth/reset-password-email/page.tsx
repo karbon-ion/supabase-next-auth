@@ -5,10 +5,9 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { supabase } from '@/utils/supabase/client'
-import { LabeledField } from '@/components/ui/form-utilities'
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 
 export default function ResetPasswordForm() {
 

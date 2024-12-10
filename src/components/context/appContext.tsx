@@ -12,6 +12,7 @@ export const useAppContext = ()=> useContext(AppContext)
 function ContextProvider({children}: any){
     const [user, setUser] = useState<User | undefined>(undefined)
     const [t, setT] = useState(en)
+    const [lang, setLang] = useState<string>()
 
     return (
         <AppContext.Provider
@@ -20,7 +21,10 @@ function ContextProvider({children}: any){
             setUser,
 
             t,
-            setT
+            setT,
+
+            lang,
+            setLang
         }}
         >
             {children}

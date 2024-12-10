@@ -12,8 +12,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { signOut } from '@/app/[locale]/login/actions'
+import { useAppContext } from '../context/appContext'
 
 export default function AdminHeader() {
+
+  const {lang} = useAppContext()
 
   return (
     <header className="bg-white shadow">
@@ -52,7 +55,7 @@ export default function AdminHeader() {
                   <DropdownMenuItem>
                     <Link href="/admin/profile">Profile</Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={()=> signOut()}>Logout</DropdownMenuItem>
+                  <DropdownMenuItem onClick={()=> signOut(lang)}>Logout</DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
