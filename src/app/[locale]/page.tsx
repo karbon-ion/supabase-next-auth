@@ -24,7 +24,11 @@ export default function Home() {
 
   useEffect(()=>{
     getUser()
+
+    if (logedIn){
+      redirect('/login')
+    }
   },[])
 
-  return (<>{logedIn && redirect('/login')}</>);
+  return (<>{logedIn}</>);
 }
